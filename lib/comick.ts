@@ -1,7 +1,7 @@
 import { ComickManga } from './types';
 
 export default async function getFirstComickMatch(title: string): Promise<ComickManga | null> {
-  const response = await fetch(`https://api.comick.fun/v1.0/search/?page=1&limit=15&tachiyomi=true&showall=false&q=${encodeURIComponent(title)}&t=false`);
+  const response = await fetch(`https://api.comick.fun/v1.0/search/?page=1&limit=15&tachiyomi=true&showall=false&q=${encodeURIComponent(title)}&t=false&excludes=fan-colored&excludes=official-colored`);
   if (!response.ok) {
     return null;
   }

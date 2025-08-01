@@ -1,7 +1,9 @@
 import { ComickManga } from './types';
 
-export default async function getFirstComickMatch(title: string): Promise<ComickManga | null> {
-  const response = await fetch(`https://api.comick.fun/v1.0/search/?page=1&limit=15&tachiyomi=true&showall=false&q=${encodeURIComponent(title)}&t=false&excludes=fan-colored&excludes=official-colored`);
+export default async function getFirstComickMatch(title: string, format: 'MANGA' | 'NOVEL' | 'ONE_SHOT'): Promise<ComickManga | null> {
+  const excludes = ['fan-colored', 'official-colored'];
+  if (format !== 'ONE_SHOT') { excludes.push('oneshot'); }
+  const response = await fetch(`https://api.comick.fun/v1.0/search/?page=1&limit=15&tachiyomi=true&showall=false&q=${encodeURIComponent(title)}&t=false&excludes=${excludes.join('&excludes=')}`);
   if (!response.ok) {
     return null;
   }

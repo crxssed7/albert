@@ -16,6 +16,7 @@ export async function getUserReadingList(username: string): Promise<MediaListRes
               color
             }
             chapters
+            format
           }
           progress
         }
@@ -57,6 +58,7 @@ export async function getManga(mediaId: number): Promise<Media | null> {
           color
         }
         chapters
+        format
       }
     }
   `

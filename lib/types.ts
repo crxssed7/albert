@@ -22,6 +22,7 @@ export interface Media {
     color: string | null | undefined
   }
   chapters: number | null | undefined
+  format: 'MANGA' | 'NOVEL' | 'ONE_SHOT'
   inferredChapterCount: number | null | undefined
   comickMatch: ComickManga | null
 }

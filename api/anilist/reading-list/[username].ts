@@ -21,7 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       mediaList.media.inferredChapterCount = mediaList.media.chapters;
       mediaList.media.comickMatch = null
     } else {
-      const comickMatch = await getFirstComickMatch(mediaList.media.title.romaji);
+      const comickMatch = await getFirstComickMatch(mediaList.media.title.romaji, mediaList.media.format);
       mediaList.media.inferredChapterCount = comickMatch?.lastChapter ?? null;
       mediaList.media.comickMatch = comickMatch
     }

@@ -109,8 +109,6 @@ This endpoint retrieves the list of manga the specified user is reading. This in
 ]
 ```
 
----
-
 ## Hardcover
 
 Hardcover only allows API requests from localhost, meaning you can only access the API from a development machine or a backend.

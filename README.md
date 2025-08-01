@@ -6,8 +6,6 @@ Random APIs I use for personal projects. They might come in handy for you too.
 
 - [AniList Helpers](#anilist-helpers)
 
----
-
 ## AniList Helpers
 
 Something that annoys me about AniList is the fact that it does not keep track of how many chapters are in a currently releasing manga. The AniList endpoints in albert all try to guess the number of chapters in a given manga by matching it up with a manga on Comick.
@@ -109,3 +107,21 @@ This endpoint retrieves the list of manga the specified user is reading. This in
 ```
 
 ---
+
+## Hardcover
+
+Hardcover only allows API requests from localhost, meaning that you can only access the API from a development machine or a backend. Unfortunately, you cannot access Hardcover from a frontend.
+
+### Hardcover Proxy
+
+Proxy requests to the Hardcover API.
+
+**Headers:**
+
+| Parameter     | Type    | Description                                                                 |
+|---------------|---------|-----------------------------------------------------------------------------|
+| `Authorization` | string | Hardcover bearer token taken from your Hardcover account settings. |
+
+**Description:**
+
+You can use this to access the API from a frontend. Specify a request body (with the GraphQL query and any variables) and Albert will send a request to Hardcover and respond with the same response and status code. Have a look at the [Hardcover API docs](https://hardcover.app/account/api) for more information.

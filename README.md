@@ -119,6 +119,11 @@ Hardcover only allows API requests from localhost, meaning you can only access t
 
 Proxy requests to the Hardcover API.
 
+**Endpoint:**
+```http
+POST /api/hardcover/proxy
+```
+
 **Headers:**
 
 | Parameter     | Type    | Description                                                                 |

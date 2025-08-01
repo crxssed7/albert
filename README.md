@@ -1,18 +1,34 @@
-# albert
+# Albert
 
 Random APIs I use for personal projects. They might come in handy for you too.
 
 ## Available APIs
 
-### AniList
+- [AniList Helpers](#anilist-helpers)
+
+---
+
+## AniList Helpers
 
 Something that annoys me about AniList is the fact that it does not keep track of how many chapters are in a currently releasing manga. The AniList endpoints in albert all try to guess the number of chapters in a given manga by matching it up with a manga on Comick.
 
-```
+### AniList Manga
+
+Retrieves a specific manga from AniList.
+
+**Endpoint:**
+```http
 GET /api/anilist/manga/:id
 ```
-Retrieve a specific manga from AniList. This includes two extra **nullable** fields, `comickMatch` and `inferredComicCount`.
-Example response:
+
+**Description:**
+
+This endpoint retrieves a specific manga from AniList. It includes two extra **nullable** fields, `comickMatch` and `inferredComicCount`.
+
+> **Note:** If a manga is already completed, it will not include a Comick match. In that case, `inferredChapterCount` will be the same as `chapters` and `comickMatch` will be null.
+
+**Example Response:**
+
 ```json
 {
   "id": 30002,
@@ -37,15 +53,30 @@ Example response:
   }
 }
 ```
-If a manga is already completed **it will not include a Comick match**. In that case, `inferredChapterCount` will be the same as `chapters` and `comickMatch` will be null.
 
----
+### AniList Reading List
 
-```
+Retrieves the list of manga a specified user is currently reading.
+
+**Endpoint:**
+```http
 GET /api/anilist/reading-list/:username
 ```
-Retrieve the list of manga the specified user is reading. This includes the `comickMatch` and `inferredChapterCount` fields. Depending on how many results are returned, the request may be slow as we need to contact the Comick API for each manga to retrieve a match. Set the `only_unread` query param to `true` or `1` to retrieve only the manga that the user has not fully read.
-Example response:
+
+**Query Parameters:**
+
+| Parameter     | Type    | Description                                                                 |
+|---------------|---------|-----------------------------------------------------------------------------|
+| `only_unread` | boolean | Set to `true` or `1` to retrieve only the manga that the user has not fully read. |
+
+**Description:**
+
+This endpoint retrieves the list of manga the specified user is reading. This includes the `comickMatch` and `inferredChapterCount` fields.
+
+> **Warning:** Depending on how many results are returned, the request may be slow as we need to contact the Comick API for each manga to retrieve a match.
+
+**Example Response:**
+
 ```json
 [
   {
@@ -76,3 +107,5 @@ Example response:
   }
 ]
 ```
+
+---

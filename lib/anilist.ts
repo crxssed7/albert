@@ -1,24 +1,29 @@
 import { Media, MediaListResponse } from "./types";
 
+const mediaQuery = `
+  {
+    id
+    title {
+      romaji
+      english
+    }
+    coverImage {
+      large
+      color
+    }
+    chapters
+    format
+  }
+`
+
 export async function getUserReadingList(username: string): Promise<MediaListResponse[]> {
   const query = `
     query ($username: String) {
       Page(perPage: 50) {
         mediaList(userName: $username, status: CURRENT, type: MANGA) {
-          media {
-            id
-            title {
-              romaji
-              english
-            }
-            coverImage {
-              large
-              color
-            }
-            chapters
-            format
-          }
+          media ${mediaQuery}
           progress
+          updatedAt
         }
       }
     }
@@ -47,19 +52,7 @@ export async function getUserReadingList(username: string): Promise<MediaListRes
 export async function getManga(mediaId: number): Promise<Media | null> {
   const query = `
     query ($mediaId: Int) {
-      Media(id: $mediaId) {
-        id
-        title {
-          romaji
-          english
-        }
-        coverImage {
-          large
-          color
-        }
-        chapters
-        format
-      }
+      Media(id: $mediaId) ${mediaQuery}
     }
   `
   const body = {

@@ -7,8 +7,30 @@ function parseBoolean(value: string | string[] | undefined): boolean {
   return value === 'true' || value === '1';
 }
 
-function isUnread(mediaList: MediaListResponse): boolean {
-  return mediaList.progress < (mediaList.media.inferredChapterCount ?? mediaList.progress);
+function isRead(mediaList: MediaListResponse): boolean {
+  if (!mediaList.media.inferredChapterCount) {
+    return false;
+  }
+
+  if (mediaList.progress < Math.floor(mediaList.media.inferredChapterCount)) {
+    return false;
+  }
+
+  // If the last chapter is a decimal number, we check if the media list was updated
+  // after the chapter was uploaded. We can then assume that the decimal chapter has
+  // been read. We do this because AniList cannot track "half" chapters e.g. "80.5".
+  // This is not 100% accurate but it's the closest we can get. Make sure to manually
+  // trigger an update of the media list once an decimal chapter has been read.
+  const isDecimalChapter = mediaList.media.inferredChapterCount !== Math.floor(mediaList.media.inferredChapterCount);
+  if (isDecimalChapter) {
+    if (mediaList.updatedAt > (mediaList.media.comickMatch?.uploadedAt ?? mediaList.updatedAt)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -28,7 +50,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (only_unread) {
-    readingList = readingList.filter(mediaList => isUnread(mediaList));
+    readingList = readingList.filter(mediaList => !isRead(mediaList));
   }
 
   return res.json(readingList);

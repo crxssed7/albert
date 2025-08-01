@@ -4,11 +4,13 @@ export interface ComickManga {
   slug: string;
   title: string;
   lastChapter: number;
+  uploadedAt: number;
 }
 
 export interface MediaListResponse {
   media: Media
   progress: number
+  updatedAt: number
 }
 
 export interface Media {

@@ -19,6 +19,7 @@ export default async function getFirstComickMatch(title: string, format: 'MANGA'
     hid: result.hid,
     slug: result.slug,
     title: result.title,
-    lastChapter: result.last_chapter
+    lastChapter: result.last_chapter,
+    uploadedAt: Math.round(Date.parse(result.uploaded_at) / 1000),
   };
 }

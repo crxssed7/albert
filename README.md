@@ -5,6 +5,7 @@ Random APIs I use for personal projects. They might come in handy for you too.
 ## Available APIs
 
 - [AniList Helpers](#anilist-helpers)
+- [Hardcover](#hardcover)
 
 ## AniList Helpers
 

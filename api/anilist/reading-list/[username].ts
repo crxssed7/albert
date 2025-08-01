@@ -20,7 +20,10 @@ function isRead(mediaList: MediaListResponse): boolean {
   // after the chapter was uploaded. We can then assume that the decimal chapter has
   // been read. We do this because AniList cannot track "half" chapters e.g. "80.5".
   // This is not 100% accurate but it's the closest we can get. Make sure to manually
-  // trigger an update of the media list once an decimal chapter has been read.
+  // trigger an update of the media list once an decimal chapter has been read. This
+  // does not work if you've binge read a bunch of chapters for a manga that has a
+  // last chapter as a decimal: e.g. last chapter is 80.5, you read chapters 75-80,
+  // this will assume that you have also read 80.5 even though you haven't.
   const isDecimalChapter = mediaList.media.inferredChapterCount !== Math.floor(mediaList.media.inferredChapterCount);
   if (isDecimalChapter) {
     if (mediaList.updatedAt > (mediaList.media.comickMatch?.uploadedAt ?? mediaList.updatedAt)) {

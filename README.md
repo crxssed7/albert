@@ -24,7 +24,8 @@ GET /api/anilist/manga/:id
 
 This endpoint retrieves a specific manga from AniList. It includes two extra **nullable** fields, `comickMatch` and `inferredComicCount`.
 
-> **Note:** If a manga is already completed, it will not include a Comick match. In that case, `inferredChapterCount` will be the same as `chapters` and `comickMatch` will be null.
+> [!NOTE]
+> If a manga is already completed, it will not include a Comick match. In that case, `inferredChapterCount` will be the same as `chapters` and `comickMatch` will be null.
 
 **Example Response:**
 
@@ -72,7 +73,8 @@ GET /api/anilist/reading-list/:username
 
 This endpoint retrieves the list of manga the specified user is reading. This includes the `comickMatch` and `inferredChapterCount` fields.
 
-> **Warning:** Depending on how many results are returned, the request may be slow as we need to contact the Comick API for each manga to retrieve a match.
+> [!CAUTION]
+> Depending on how many results are returned, the request may be slow as we need to contact the Comick API for each manga to retrieve a match.
 
 **Example Response:**
 
@@ -126,3 +128,6 @@ Proxy requests to the Hardcover API.
 **Description:**
 
 You can use this to access the API from a frontend. Specify a request body (with the GraphQL query and any variables) and Albert will send a request to Hardcover and respond with the same response and status code. Have a look at the [Hardcover API docs](https://hardcover.app/account/api) for more information.
+
+> [!CAUTION]
+> Although this allows you to use Hardcover from a frontend, you still shouldn't. Exposing your token could lead to unauthorized access and your account being deleted.

@@ -69,6 +69,6 @@ export default async function getFirstMangaParkMatch(title: string): Promise<Man
     urlPath: result.data.urlPath,
     title: result.data.name,
     lastChapter: lastChapter || 0,
-    uploadedAt: Math.round(Date.parse(result.data.max_chapterNode.data.dateCreate) / 1000),
+    uploadedAt: Math.round(result.data.max_chapterNode.data.dateCreate / 1000)
   };
 }

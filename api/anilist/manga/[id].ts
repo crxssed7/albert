@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { getManga, getUserReadingList } from '../../../lib/anilist';
-import getFirstComickMatch from '../../../lib/comick';
+import getFirstMangaParkMatch from '../../../lib/mangapark';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { id } = req.query;
@@ -9,9 +9,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(404).json({ error: 'Manga not found' });
   }
 
-  const comickMatch = await getFirstComickMatch(manga.title.romaji, manga.format);
-  manga.inferredChapterCount = comickMatch?.lastChapter ?? null;
-  manga.comickMatch = comickMatch
+  const mangaParkMatch = await getFirstMangaParkMatch(manga.title.romaji);
+  manga.inferredChapterCount = mangaParkMatch?.lastChapter ?? null;
+  manga.comickMatch = null;
+  manga.mangaParkMatch = mangaParkMatch;
 
   return res.json(manga);
 }

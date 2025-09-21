@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { getUserReadingList } from '../../../lib/anilist';
-import getFirstComickMatch from '../../../lib/comick';
+import getFirstMangaParkMatch from '../../../lib/mangapark';
 import { MediaListResponse } from '../../../lib/types';
 
 function parseBoolean(value: string | string[] | undefined): boolean {
@@ -26,7 +26,7 @@ function isRead(mediaList: MediaListResponse): boolean {
   // this will assume that you have also read 80.5 even though you haven't.
   const isDecimalChapter = mediaList.media.inferredChapterCount !== Math.floor(mediaList.media.inferredChapterCount);
   if (isDecimalChapter) {
-    if (mediaList.updatedAt > (mediaList.media.comickMatch?.uploadedAt ?? mediaList.updatedAt)) {
+    if (mediaList.updatedAt > (mediaList.media.mangaParkMatch?.uploadedAt ?? mediaList.updatedAt)) {
       return true;
     } else {
       return false;
@@ -45,10 +45,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (mediaList.media.chapters) {
       mediaList.media.inferredChapterCount = mediaList.media.chapters;
       mediaList.media.comickMatch = null
+      mediaList.media.mangaParkMatch = null
     } else {
-      const comickMatch = await getFirstComickMatch(mediaList.media.title.romaji, mediaList.media.format);
-      mediaList.media.inferredChapterCount = comickMatch?.lastChapter ?? null;
-      mediaList.media.comickMatch = comickMatch
+      const mangaParkMatch = await getFirstMangaParkMatch(mediaList.media.title.romaji);
+      mediaList.media.inferredChapterCount = mangaParkMatch?.lastChapter ?? null;
+      mediaList.media.comickMatch = null
+      mediaList.media.mangaParkMatch = mangaParkMatch
     }
   }
 

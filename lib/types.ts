@@ -7,6 +7,14 @@ export interface ComickManga {
   uploadedAt: number;
 }
 
+export interface MangaParkManga {
+  id: number;
+  urlPath: string;
+  title: string;
+  lastChapter: number;
+  uploadedAt: number;
+}
+
 export interface MediaListResponse {
   media: Media
   progress: number
@@ -27,4 +35,5 @@ export interface Media {
   format: 'MANGA' | 'NOVEL' | 'ONE_SHOT'
   inferredChapterCount: number | null | undefined
   comickMatch: ComickManga | null
+  mangaParkMatch: MangaParkManga | null
 }

@@ -1,7 +1,7 @@
 import { TraktListItem } from "./types";
 
 export async function getListItems(username: string, slug: string): Promise<TraktListItem[]> {
-  const response = await fetch(`https://api.trakt.tv/users/${username}/lists/${slug}/items?extended=images`, {
+  const response = await fetch(`https://api.trakt.tv/users/${username}/lists/${slug}/items/show?extended=images`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

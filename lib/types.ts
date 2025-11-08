@@ -37,3 +37,19 @@ export interface Media {
   comickMatch: ComickManga | null
   mangaParkMatch: MangaParkManga | null
 }
+
+export interface TraktListItem {
+  rank: number
+  id: number
+  listed_at: string
+  show: {
+    title: string
+    year: number
+    ids: {
+      trakt: number
+      slug: string
+      imdb: string
+      tmdb: number
+    }
+  }
+}

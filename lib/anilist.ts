@@ -88,6 +88,7 @@ export async function getUserFavourites(username: string): Promise<object[]> {
               }
               coverImage {
                 medium
+                large
               }
               id
             }

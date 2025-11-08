@@ -75,3 +75,44 @@ export async function getManga(mediaId: number): Promise<Media | null> {
   const json = await response.json();
   return json.data.Media;
 }
+
+export async function getUserFavourites(username: string): Promise<object[]> {
+  const query = `
+    query MyQuery($username: String) {
+      User(name: $username) {
+        favourites {
+          manga {
+            nodes {
+              title {
+                english
+              }
+              coverImage {
+                medium
+              }
+              id
+            }
+          }
+        }
+      }
+    }
+  `
+  const body = {
+    query,
+    variables: {
+      username,
+    },
+  }
+  const response = await fetch(`https://graphql.anilist.co`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+  if (!response.ok) {
+    return [];
+  }
+  const json = await response.json();
+  return json.data.User.favourites.manga.nodes;
+}

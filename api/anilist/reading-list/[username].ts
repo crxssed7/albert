@@ -47,7 +47,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       mediaList.media.comickMatch = null
       mediaList.media.mangaParkMatch = null
     } else {
-      const mangaParkMatch = await getFirstMangaParkMatch(mediaList.media.title.romaji);
+      const mangaParkMatch = await getFirstMangaParkMatch(mediaList.media.title.english ?? mediaList.media.title.romaji);
       mediaList.media.inferredChapterCount = mangaParkMatch?.lastChapter ?? null;
       mediaList.media.comickMatch = null
       mediaList.media.mangaParkMatch = mangaParkMatch

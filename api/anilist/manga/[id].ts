@@ -9,7 +9,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(404).json({ error: 'Manga not found' });
   }
 
-  const mangaParkMatch = await getFirstMangaParkMatch(manga.title.romaji);
+  const mangaParkMatch = await getFirstMangaParkMatch(manga.title.english ?? manga.title.romaji);
   manga.inferredChapterCount = mangaParkMatch?.lastChapter ?? null;
   manga.comickMatch = null;
   manga.mangaParkMatch = mangaParkMatch;

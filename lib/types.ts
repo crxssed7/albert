@@ -1,18 +1,9 @@
-export interface ComickManga {
-  id: number;
-  hid: number;
-  slug: string;
-  title: string;
-  lastChapter: number;
-  uploadedAt: number;
-}
-
-export interface MangaParkManga {
-  id: number;
-  urlPath: string;
-  title: string;
-  lastChapter: number;
-  uploadedAt: number;
+export interface Activities {
+  data: {
+    [key: string]: {
+      activities: { progress: string | null }[]
+    }
+  }
 }
 
 export interface MediaListResponse {
@@ -34,8 +25,7 @@ export interface Media {
   chapters: number | null | undefined
   format: 'MANGA' | 'NOVEL' | 'ONE_SHOT'
   inferredChapterCount: number | null | undefined
-  comickMatch: ComickManga | null
-  mangaParkMatch: MangaParkManga | null
+  inferredChapterCountConfidence: number | null | undefined
 }
 
 export interface TraktListItem {

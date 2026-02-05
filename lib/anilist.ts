@@ -1,4 +1,5 @@
-import { Media, MediaListResponse } from "./types";
+import { convertNameToGraphqlSafe } from "./helpers";
+import { Activities, Media, MediaListResponse } from "./types";
 
 const mediaQuery = `
   {
@@ -116,4 +117,41 @@ export async function getUserFavourites(username: string): Promise<object[]> {
   }
   const json = await response.json();
   return json.data.User.favourites.manga.nodes;
+}
+
+export async function getActiviesFromMedias(medias: {id: number, name: string}[]): Promise<Activities | null> {
+  const activityQueries = medias.map((media) => {
+    const name = convertNameToGraphqlSafe(media.name)
+    return `
+      ${name}: Page(perPage: 50) {
+        activities(mediaId: ${media.id}, sort: [ID_DESC]) {
+          ... on ListActivity {
+            progress
+          }
+        }
+      }
+    `
+  }).join('\n');
+  const query = `
+    {
+      ${activityQueries}
+    }
+  `
+
+  const body = {
+    query
+  }
+  const response = await fetch(`https://graphql.anilist.co`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+  if (!response.ok) {
+    return null;
+  }
+  const json = await response.json();
+  return json;
 }

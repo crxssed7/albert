@@ -24,7 +24,7 @@ export function guessLatestChapter(chapters: number[]): {chapter: number, confid
   const scored = Object.keys(tally).map(Number).map(chapter => {
     return {
       chapter,
-      score: tally[chapter] * chapter
+      score: tally[chapter] * Math.sqrt(chapter)
     }
   }).sort((a, b) => b.score - a.score)
 
